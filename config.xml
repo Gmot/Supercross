@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:rim="http://www.blackberry.com/ns/widgets"
+	version="1.0.0.0" id="Supercross">
+
+  <name>SuperCross</name>
+
+  <author>Alex Guilmoto</author>
+
+  <description>
+       A very big game of TicTacToe
+  </description>
+  
+  <meta name="viewport" id="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no" />  
+
+  <feature id="blackberry.app" required="true" version="1.0.0.0" />
+  <feature id="blackberry.connection" />
+  
+  <icon rim:hover="false" src="res/icon/blackberry/114by114_00004.png" />
+  <icon rim:hover="true" src="res/icon/blackberry/114by114_00004.png" />
+  
+  <rim:permissions>
+    <rim:permit></rim:permit>
+  </rim:permissions>
+
+  <rim:loadingScreen backgroundColor="#CFCFCF"
+                     foregroundImage="res/screen/blackberry/1024by768_00004.png"
+		     onFirstLaunch="true">
+    <rim:transitionEffect type="fadeOut" />
+  </rim:loadingScreen>
+
+  <content src="index.html" />
+
+</widget>

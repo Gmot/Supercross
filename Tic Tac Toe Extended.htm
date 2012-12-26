@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://www.gethugames.in/tictactoe/ -->
+<html>
+	<head profile="http://www.w3.org/2005/10/profile">
+	<title> Supercross </title>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link type="text/css" href="style.css" rel="Stylesheet">
+    
+    <!--external and internal scripts-->
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined')
+        {
+            document.write(unescape("%3Cscript src='scripts/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+    </script>
+    <script type="text/javascript">
+		function init()
+		{
+				TicTacToe.GameManager.init();
+				$("#preLoader").hide();
+			}
+    </script>
+
+	<script type="text/javascript" src="min.js"></script>
+
+    <!--
+	<script type="text/javascript" src="scripts/TicTacToe.js"></script>
+	<script type="text/javascript" src="scripts/FBWrapper.js"></script>
+	<script type="text/javascript" src="scripts/TwitterWrapper.js"></script>
+	<script type="text/javascript" src="scripts/AudioManager.js"></script>
+	<script type="text/javascript" src="scripts/InputManager.js"></script>
+	<script type="text/javascript" src="scripts/GameState.js"></script>
+	<script type="text/javascript" src="scripts/GameLogic.js"></script>
+	<script type="text/javascript" src="scripts/BoardTile.js"></script>
+	<script type="text/javascript" src="scripts/GameBoard.js"></script>
+	<script type="text/javascript" src="scripts/GameManager.js"></script>
+	<script type="text/javascript" src="scripts/GameManager.js"></script>
+    -->
+
+</head>
+
+<body onload="init()">
+	<div id="preLoader" style="position: absolute; z-index: 99999; width: 100%; height: 100%; background-color: rgb(108, 79, 46); color: rgb(233, 216, 197); top: 0px; left: 0px; display: none;">
+		<div id="loadingDiv" style="position:absolute; width:160px; height:50px; top:50%; left:50%; margin:-25px 0px 0px -80px; font: 32px &#39;arial&#39;; border:0px solid; font-variant:small-caps;">
+			Loading...
+		</div>
+	</div>
+
+	<div id="container">
+        <div id="titleDiv"><h1 style="display:inline">SuperCross</h1><div id="inGameMute"></div></div>
+		<div id="canvasContainer">
+			<canvas id="boardCanvas" width=80% height=80%></canvas>
+            <div id="menuScreen" class="otherScreen">
+                <p class="menuButton" id="newAIGameButton"> New Game vs AI </p>
+                <p class="menuButton" id="newHumanGameButton"> New Game vs Human </p>
+                <p class="menuButton" id="muteMusicButton"> Mute Music </p>
+                <p class="menuButton" id="helpButton"> Help </p>
+                <p class="menuButton" id="creditsButton"> Credits </p>
+            </div> 
+            <div id="infoScreen" class="otherScreen" style="display: none;"></div>
+			<div id="creditsScreen" class="otherScreen">
+                <p id="creditsText"><h2>CREDITS</h2><small>(click to go back)</small><br/><br/><br/> <br/> <br />  This software is released under GNU GPL v3. <a href='License.txt' target='_blank' >Click here</a> to know your rights.  <br /> <br/>http://binarysaiy2k.blogspot.com/2011/12/tic-tac-toe-extended.html</a> <br/> <br /> You can grab the source code from <a href="https://github.com/Gmot/Supercross" target="_blank"> https://github.com/Gmot/Supercross</a> <br /> <br /> <br /> Music : <a href="http://incompetech.com" target='_blank'>Kevin MacLeod</a> <br /> Sound effects from <a href='http://opengameart.org/' target='_blank'>Open Game Art</a> </p> 
+			</div> 
+            <div id="tipsScreen" class="otherScreen" style="background-color: rgba(0, 0, 0, 0); font-size: 1em; font-weight: bold; color: rgb(34, 34, 34); display: none;">
+                <br><br><br><br><br>
+                <p> Place 'x' in four adjacent tiles to score points. </p>
+            </div>
+		</div>
+		<div id="scoreBoardDiv" style="display: none;">
+			<div id="player1Sign" class="scoreBoardLabel">X</div>
+			<div id="player1Score" class="scoreBoardLabel" style="background-color: #97672e">0</div>
+			<div id="timeTaken" class="scoreBoardLabel" style="width:50%">00:00</div>
+			<div id="player2Score" class="scoreBoardLabel" style="background-color: #97672e">0</div>
+			<div id="player2Sign" class="scoreBoardLabel">O</div>
+		</div>
+		<div id="playOptionsDiv" style="display: none;">
+			<div id="newGameDiv" class="playOptionsHalf">
+                <p id="menuButton" style="background-color:rgba(125, 76, 24, 0.5); margin:4px; padding:4px; border-radius: 10px;"> MENU </p>
+                <input type="text" value="set player 1" class="nameInputBox" id="p1NameDiv1">
+                <input type="text" value="set player 2" class="nameInputBox" id="p2NameDiv1">
+			</div>
+			<div id="creditsDiv" class="playOptionsHalf" style="float:right; overflow:visible">
+                <div id="tweet" class="socialButton">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAAUCAIAAACmgTKJAAAABGdBTUEAALGPC/xhBQAAAzdJREFUSEvVl01IVFEUx23bolWLRPqyIIiCol1tIiIw2rRoEbaJWgRCEIVYCm1yKjIkU8xIm1JbWE3B5MegZkzOWPYyQUeLqWlCRkRGxmaajyyp3/M8L6+ZgYGB4jUc9Lxzzz33d//n3ue4IvVjcTQU/RhOFFjys3n1yh1FqwpeBSMjoW+/rPqBDcKCNi1kVUKDC8L/hzK5sGhlM7TMidjmmbA5h3zTkZyZfyPBoIymfiqzvxwLzSfNkf31XUVV7ftqHprjpB203TdbXZfXPCsPXwvOIUTmRIMyklhQVvFkqPBs06l7rp6xIMHq/okNtc/XX+0uqrCX3nKqNCqi7oUHvWtOXi5r7sIffB8y18nDP3SljVKZE7NQspWt1zoRD6wyx/Duu6+LG4c31nvWXnoKfSAcG5mal0I0dyr8FUqvfxofLas6XhBH8r0X7wi0U5ssrXuEc7NH23O+gThNmIl9J9I7GiipthNkq0Qcw5Obymq2nL4OK4qaWQ1Kksw28Hlue4Mb/VARxOImjZ/4oBeeaWwZeKeSKQdl/3iQCMuzhjgiMD6IxxseyxAcDq+PIYfmpxU4bMw98WXnuXpAKQUx3OSwTzNPdkoEO9H5QecTxCVDzm03+g7fdtW6tKyUlGZhzglk6AEWdZAHOZEQVjaDwUECWDCBSKS8tZs0aqqOp6lmULIAxv7EwRC8pGNcIUrTOaPEKaHS6L5oKRGWR0Ii8EGJL+pCCROgGEGkhYwhFeGoMJ27yKgqrpw/KP2z8aNNzyo7Pe1aoNw1uWtZRRGSw8raaSWkcYpSGgoTaYIrqwIBJdPZZLPrDc3lUDLK2eVAIzaPpKGlHMq0VQzKQCSJMUahY63udTYnWKrd+AdaBrkiesJSpjI2hiSwqgo8ctp4pJtysfCRE9l4lD2QT4Q0iTAFStJ4K0tEFZSyy5ThGOuBiDGf21M58OmIw4dxQO1v9cuhT1hKSDP+1sr2xOJJ/f6K6vhqCM30oWicfCklbwkSVAVWIQdLW8ugBNFsoqs6wjymJeT9mFkK3JzVslPmnPaPEwxK30zcyqZT8h2zzz/LzbKmwaZ/C04kU/ziBWFNg43/eX4DKuVtXDsPfl0AAAAASUVORK5CYII=" width="55px" height="20px" style="cursor:pointer;background:none;padding-Left:1px;padding-Right:1px;width:55px;height:20px;" abtwitterbadge="1" abpl="1" id="abTwitterBadge_0"><a href="https://twitter.com/share" class="twitter-share-button" data-count="vertical" data-url="http://www.gethugames.in/tictactoe/" style="display: none;" abtwitterbadge="1">Tweet</a>
+                </div>
+
+                <div id="gplus" class="socialButton">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAUCAIAAABAqPnNAAAABGdBTUEAALGPC/xhBQAAAYRJREFUSEtjvHPnDntAPAMhYJi0gpASBiVzW4JqgApOsrLjV3ZXaCvDYx1rYpBI32OCyOyoAjHo/yl1gmiwOmvz5s3XBxkAOokBiH8OMgB11vdBBqDO+koDUL78o2/PB/IMhjrrM1ng6avPey5+uv7oE5puoIhvz3uxrHf2ze/JMvgz1FkfyQK7zn8A2t289j1c9+OXHzPmgBwEQaVLEVIk2QB11juywI6zILub1iA0z90DEvHufmfXBGIAueQBqLPekAiKF7/17npnC7bboOodkA1EQDO2nX5z5ArILKAgUArCJgNAnfWKRODV9RYeU3AG3Iy7j15BBEk0FaEc6qznZIHNJ14C7a5b8RpNN0Tcq/MNWaaCNEGd9ZQssPHYc6D1tctfoekGigDFCxagixNvCdRZj8kCJ688qVn2csPRZ2i6w/pfA521eC+6OPGWQJ31kKpAv+IN0FknLj0m21Sos+4PMgB11t1BBqDOOnz48O1BA4COATnr////QGpQgZMnTwIAc6M3U4ObOZEAAAAASUVORK5CYII=" width="50px" height="20px" allowresize="yes" style="cursor:pointer;background:none;padding-Left:1px;padding-Right:1px;width:50px;height:20px;" abgoogle="1" abpl="1" id="abGoogle_0"><div class="g-plusone" data-size="tall" data-href="http://www.gethugames.in/tictactoe/" style="display: none;" abgoogle="1"></div>
+                </div>
+            
+                <div id="fb" class="socialButton" style="overflow:visible"> 
+                    <div class="fb-like" data-href="http://www.gethugames.in/tictactoe/" data-send="false" data-layout="box_count" data-width="500" data-show-faces="false" data-colorscheme="dark" data-font="segoe ui"></div>
+                </div>
+			</div>
+		</div>
+	</div>
+        
+    <!--Importing Facebook's Javascript SDK - Begin
+    <div id="fb-root"><script async="" src="all.js"></script></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '267249556660656', // App ID
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          oauth      : true, // enable OAuth 2.0
+          xfbml      : true  // parse XFBML
+        });
+
+        FB.getLoginStatus(TicTacToe.FBWrapper.checkLoginStatus);
+    };
+
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
+      // Load the SDK Asynchronously
+      (function(d){
+          var e = document.createElement('script'); e.async = true;
+            e.src = document.location.protocol 
+                + '//connect.facebook.net/en_US/all.js';
+                  document.getElementById('fb-root').appendChild(e);
+       }());
+
+        //plus one
+        (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+
+    </script>
+    <!--Importing Facebook's Javascript SDK - End-->
+
+
+
+
+</body></html>
